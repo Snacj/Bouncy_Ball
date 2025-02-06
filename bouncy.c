@@ -11,7 +11,6 @@
 #define HEIGHT 600
 #define COLOR_WHITE 0xffffffff
 #define COLOR_BLACK 0x00000000
-#define COLOR_RED 0x0000ffff
 #define X_VELOCITY 2
 #define Y_VELOCITY 1
 
@@ -58,10 +57,6 @@ int main (int argc, char *argv[]) {
     double x_speed = X_VELOCITY;
     double y_speed = Y_VELOCITY;
 
-    struct Circle small_circle = {300,300,50};
-    double x_speed_small = X_VELOCITY;
-    double y_speed_small = Y_VELOCITY;
-
     SDL_Rect erase_rect = {0,0,WIDTH,HEIGHT};
 
     int sim_running = 1;
@@ -75,18 +70,12 @@ int main (int argc, char *argv[]) {
         
         circle.x += x_speed;
         circle.y -= y_speed;
-        small_circle.x -= x_speed_small;
-        small_circle.y += y_speed_small;
 
         if (detectCollision(surface, circle) == 0 || detectCollision(surface, circle) == 2) y_speed *= -1;
         if (detectCollision(surface, circle) == 1 || detectCollision(surface, circle) == 3) x_speed *= -1;
 
-        if (detectCollision(surface, small_circle) == 0 || detectCollision(surface, small_circle) == 2) y_speed_small *= -1;
-        if (detectCollision(surface, small_circle) == 1 || detectCollision(surface, small_circle) == 3) x_speed_small *= -1;
-
         SDL_FillRect(surface, &erase_rect, COLOR_BLACK);
         drawCircle(surface, circle, COLOR_WHITE);
-        drawCircle(surface, small_circle, COLOR_RED);
         SDL_UpdateWindowSurface(window);
         SDL_Delay(10);
     }
